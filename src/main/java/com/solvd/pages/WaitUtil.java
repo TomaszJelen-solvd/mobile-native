@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.List;
 
-public class Utils {
-    protected static final Logger logger = LoggerFactory.getLogger(Utils.class);
+public class WaitUtil {
+    protected static final Logger logger = LoggerFactory.getLogger(WaitUtil.class);
     public static final int WAIT_POLL_INTERVAL_MS = 3000;
-    public static void waitForElementsListNotEmpty(final WebDriver driver, final List<? extends ExtendedWebElement> elements, int waitTimeoutSec) {
+    public static void waitUntilListIsPresent(final WebDriver driver, final List<? extends ExtendedWebElement> elements, int waitTimeoutSec) {
         try {
             logger.debug("Waiting for elements list to be not empty and at least one element to be present");
             new WebDriverWait(driver, Duration.ofSeconds(waitTimeoutSec), Duration.ofMillis(WAIT_POLL_INTERVAL_MS))

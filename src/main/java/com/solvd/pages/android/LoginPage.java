@@ -1,24 +1,25 @@
 package com.solvd.pages.android;
 
 import com.solvd.pages.common.LoginPageBase;
-import com.solvd.pages.common.ProductPageBase;
+import com.solvd.pages.common.ProductListPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = LoginPageBase.class)
 public class LoginPage extends LoginPageBase{
-    @FindBy(xpath = "//android.widget.EditText[@content-desc=\"test-Username\"]")
+    @AndroidFindBy(accessibility = "test-Username")
     private ExtendedWebElement username;
 
-    @FindBy(xpath = "//android.widget.EditText[@content-desc=\"test-Password\"]")
+    @AndroidFindBy(accessibility = "test-Password")
     private ExtendedWebElement password;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]")
+    @AndroidFindBy(accessibility = "test-LOGIN")
     private ExtendedWebElement login;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Error message\"]/android.widget.TextView")
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']/android.widget.TextView")
     private ExtendedWebElement errorMessage;
 
     public LoginPage(WebDriver driver) {
@@ -27,7 +28,7 @@ public class LoginPage extends LoginPageBase{
 
     @Override
     public void enterName(String name) {
-        this.username.type(name);
+        username.type(name);
     }
 
     @Override
@@ -36,19 +37,19 @@ public class LoginPage extends LoginPageBase{
     }
 
     @Override
-    public ProductPageBase clickLogin() {
+    public ProductListPageBase clickLogin() {
         login.click();
-        return initPage(getDriver(), ProductPageBase.class);
+        return initPage(getDriver(), ProductListPageBase.class);
     }
 
     @Override
-    public void clickLoginExpectingError() {
-        login.click();
+    public boolean isLoginPresent() {
+        return login.isElementPresent();
     }
 
     @Override
-    public boolean checkIfErrorDisplayed() {
-        return errorMessage.isDisplayed();
+    public boolean isErrorMessagePresent() {
+        return errorMessage.isElementPresent();
     }
 
     @Override

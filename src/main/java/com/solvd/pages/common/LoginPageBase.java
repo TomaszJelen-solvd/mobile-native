@@ -11,11 +11,17 @@ public abstract class LoginPageBase extends PageBase{
 
     public abstract void enterPassword(String password);
 
-    public abstract ProductPageBase clickLogin();
+    public abstract ProductListPageBase clickLogin();
 
-    public abstract void clickLoginExpectingError();
+    public ProductListPageBase login(String name, String password) {
+        enterName(name);
+        enterPassword(password);
+        return clickLogin();
+    }
 
-    public abstract boolean checkIfErrorDisplayed();
+    public abstract boolean isLoginPresent();
+
+    public abstract boolean isErrorMessagePresent();
 
     public abstract String getErrorText();
 

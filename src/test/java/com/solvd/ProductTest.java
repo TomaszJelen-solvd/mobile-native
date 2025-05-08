@@ -1,34 +1,41 @@
 package com.solvd;
 
+import com.solvd.pages.SortType;
 import com.solvd.pages.common.LoginPageBase;
-import com.solvd.pages.common.ProductPageBase;
+import com.solvd.pages.common.ProductListPageBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ProductTest extends AbstractTest{
+public class ProductTest extends BaseTest {
+    //TC003
     @Test
-    public void testSortAsc() {
-        driver = getDriver();
-        LoginPageBase loginPage = initPage(driver, LoginPageBase.class);
+    public void testSortPricesAscending() {
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
-        loginPage.enterName("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        ProductPageBase productPage = loginPage.clickLogin();
-
-        productPage.sortPricesAsc();
-        Assert.assertTrue(productPage.checkIfPricesAscend(), "Visible prices aren't sorted ascending");
+        productPage.sortPrices(SortType.PRICE_LOW_TO_HIGH);
+        Assert.assertTrue(productPage.verifyProductSortingByPrice(SortType.PRICE_LOW_TO_HIGH), "Visible prices aren't sorted properly");
     }
 
+    //TC004
     @Test
-    public void testSortDesc() {
-        driver = getDriver();
-        LoginPageBase loginPage = initPage(driver, LoginPageBase.class);
+    public void testSortPricesDescending() {
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
-        loginPage.enterName("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        ProductPageBase productPage = loginPage.clickLogin();
+        productPage.sortPrices(SortType.PRICE_HIGH_TO_LOW);
+        Assert.assertTrue(productPage.verifyProductSortingByPrice(SortType.PRICE_HIGH_TO_LOW), "Visible prices aren't sorted properly");
+    }
 
-        productPage.sortPricesDesc();
-        Assert.assertTrue(productPage.checkIfPricesDescend(), "Visible prices aren't sorted descending");
+    //TC006
+    @Test
+    public void testToggleProductView() {
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
+
+        productPage.toggleView();
+        Assert.assertTrue(productPage.isDescriptionPresent(), "Failed to display products descriptions");
+        productPage.toggleView();
+        Assert.assertFalse(productPage.isDescriptionPresent(), "Failed to hide products descriptions");
     }
 }

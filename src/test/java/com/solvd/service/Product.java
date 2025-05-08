@@ -1,4 +1,4 @@
-package com.solvd;
+package com.solvd.service;
 
 public class Product {
     private String name;

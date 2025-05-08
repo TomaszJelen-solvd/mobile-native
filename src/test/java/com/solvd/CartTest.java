@@ -2,24 +2,47 @@ package com.solvd;
 
 import com.solvd.pages.common.CartPageBase;
 import com.solvd.pages.common.LoginPageBase;
-import com.solvd.pages.common.ProductPageBase;
+import com.solvd.pages.common.ProductListPageBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import static com.solvd.service.ProductService.SAUCE_LABS_BACKPACK;
+import static com.solvd.service.ProductService.SAUCE_LABS_BIKE_LIGHT;
 
-import static com.solvd.ProductService.SAUCE_LABS_BACKPACK;
-
-public class CartTest extends AbstractTest{
+public class CartTest extends BaseTest {
+    //TC005
     @Test
     public void testAddProductInCart() {
-        driver = getDriver();
-        LoginPageBase loginPage = initPage(driver, LoginPageBase.class);
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
-        loginPage.enterName("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        ProductPageBase productPage = loginPage.clickLogin();
-
-        productPage.addProduct(SAUCE_LABS_BACKPACK.getIndex());
-        CartPageBase cartPage = productPage.clickCart();
+        productPage.addProduct(SAUCE_LABS_BACKPACK.getName());
+        CartPageBase cartPage = productPage.openCart();
         Assert.assertTrue(cartPage.checkIfVisibleInCart(SAUCE_LABS_BACKPACK.getName()), "Failed to display added product in cart");
+    }
+
+    //TC008
+    @Test
+    public void testAddSeveralProductsInCart() {
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
+
+        productPage.addProduct(SAUCE_LABS_BACKPACK.getName());
+        productPage.addProduct(SAUCE_LABS_BIKE_LIGHT.getName());
+
+        CartPageBase cartPage = productPage.openCart();
+        Assert.assertTrue(cartPage.checkIfVisibleInCart(SAUCE_LABS_BACKPACK.getName()), "Failed to display added product in cart");
+        Assert.assertTrue(cartPage.checkIfVisibleInCart(SAUCE_LABS_BIKE_LIGHT.getName()), "Failed to display added product in cart");
+    }
+
+    //TC009
+    @Test
+    public void testAddAndRemoveProductInCart() {
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
+
+        productPage.addProduct(SAUCE_LABS_BACKPACK.getName());
+        productPage.removeProduct(SAUCE_LABS_BACKPACK.getName());
+        CartPageBase cartPage = productPage.openCart();
+        Assert.assertTrue(cartPage.isEmpty(), "Failed to remove added product from cart");
     }
 }
