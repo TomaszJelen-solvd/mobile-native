@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class ProductTest extends BaseTest {
     //TC003
     @Test
-    public void testSortPricesAscending() {
+    public void testProductSortInAscendingOrder() {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
@@ -19,7 +19,7 @@ public class ProductTest extends BaseTest {
 
     //TC004
     @Test
-    public void testSortPricesDescending() {
+    public void testProductSortInDescendingOrder() {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
@@ -34,8 +34,8 @@ public class ProductTest extends BaseTest {
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
         productPage.toggleView();
-        Assert.assertTrue(productPage.isDescriptionPresent(), "Failed to display products descriptions");
+        Assert.assertTrue(productPage.isProductDescriptionPresent(), "Failed to display products descriptions");
         productPage.toggleView();
-        Assert.assertFalse(productPage.isDescriptionPresent(), "Failed to hide products descriptions");
+        Assert.assertFalse(productPage.isProductDescriptionPresent(), "Failed to hide products descriptions");
     }
 }

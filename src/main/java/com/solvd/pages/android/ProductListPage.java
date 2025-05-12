@@ -5,6 +5,7 @@ import com.solvd.pages.android.components.FilterComponent;
 import com.solvd.pages.android.components.MenuComponent;
 import com.solvd.pages.android.components.ProductListItemComponent;
 import com.solvd.pages.common.CartPageBase;
+import com.solvd.pages.common.DrawingPageBase;
 import com.solvd.pages.common.LoginPageBase;
 import com.solvd.pages.common.ProductListPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -13,6 +14,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.solvd.pages.WaitUtil.waitUntilListIsPresent;
@@ -56,10 +58,10 @@ public class ProductListPage extends ProductListPageBase {
     @Override
     public boolean verifyProductSortingByPrice(SortType sortType) {
         waitUntilListIsPresent(getDriver(), items, WAIT_TIMEOUT_SEC);
-        Float reference = null;
-        float price;
+        BigDecimal reference = null;
+        BigDecimal price;
         for (ProductListItemComponent item : items) {
-            price = Float.parseFloat(item.getPrice().substring(1));
+            price = new BigDecimal(item.getPrice().substring(1));
             if (reference != null) {
                 if (sortType.isAscending()) {
                     if (reference.compareTo(price) > 0) {
@@ -88,16 +90,22 @@ public class ProductListPage extends ProductListPageBase {
     }
 
     @Override
+    public DrawingPageBase clickdrawingOption() {
+        menuButton.click();
+        return menuOptions.clickDrawingOption();
+    }
+
+    @Override
     public LoginPageBase logout() {
         menuButton.click();
         return menuOptions.logout();
     }
 
     @Override
-    public void addProduct(String name) {
+    public void addProductToCart(String name) {
         waitUntilListIsPresent(getDriver(), items, WAIT_TIMEOUT_SEC);
         for (ProductListItemComponent item : items) {
-            if(item.getProductTitle().equals(name)) {
+            if (item.getProductTitle().equals(name)) {
                 item.addProduct();
             }
         }
@@ -107,7 +115,7 @@ public class ProductListPage extends ProductListPageBase {
     public void removeProduct(String name) {
         waitUntilListIsPresent(getDriver(), items, WAIT_TIMEOUT_SEC);
         for (ProductListItemComponent item : items) {
-            if(item.getProductTitle().equals(name)) {
+            if (item.getProductTitle().equals(name)) {
                 item.removeProduct();
             }
         }
@@ -120,7 +128,7 @@ public class ProductListPage extends ProductListPageBase {
     }
 
     @Override
-    public boolean isDescriptionPresent() {
+    public boolean isProductDescriptionPresent() {
         waitUntilListIsPresent(getDriver(), items, WAIT_TIMEOUT_SEC);
         return items.get(0).isDescriptionPresent();
     }

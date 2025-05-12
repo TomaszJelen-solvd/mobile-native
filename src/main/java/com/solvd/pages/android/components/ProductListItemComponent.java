@@ -1,13 +1,14 @@
 package com.solvd.pages.android.components;
 
 import com.zebrunner.carina.utils.android.AndroidService;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 
-public class ProductListItemComponent extends AbstractUIObject{
+public class ProductListItemComponent extends AbstractUIObject implements IMobileUtils {
     @AndroidFindBy(accessibility = "test-Item title")
     private ExtendedWebElement title;
 
@@ -28,12 +29,12 @@ public class ProductListItemComponent extends AbstractUIObject{
     }
 
     public String getProductTitle() {
-        new AndroidService().swipe(title);
+        swipe(title);
         return title.getText();
     }
 
     public String getPrice() {
-        new AndroidService().swipe(price);
+        swipe(price);
         return price.getText();
     }
 
@@ -42,12 +43,12 @@ public class ProductListItemComponent extends AbstractUIObject{
     }
 
     public void addProduct() {
-        new AndroidService().swipe(addButton);
+        swipe(addButton);
         addButton.click();
     }
 
     public void removeProduct() {
-        new AndroidService().swipe(removeButton);
+        swipe(removeButton);
         removeButton.click();
     }
 }

@@ -5,15 +5,14 @@ import com.solvd.pages.common.CartPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 import static com.solvd.pages.WaitUtil.waitUntilListIsPresent;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CartPageBase.class)
 public class CartPage extends CartPageBase {
+    public static final int WAIT_TIMEOUT_SEC = 3;
     @AndroidFindBy(accessibility = "test-Item")
     private List<CartItemComponent> items;
 
@@ -22,10 +21,10 @@ public class CartPage extends CartPageBase {
     }
 
     @Override
-    public boolean checkIfVisibleInCart(String product) {
-        waitUntilListIsPresent(getDriver(), items, 3);
-        for(CartItemComponent item : items) {
-            if(item.getProductTitle().equals(product)) {
+    public boolean isProductVisibleInCart(String product) {
+        waitUntilListIsPresent(getDriver(), items, WAIT_TIMEOUT_SEC);
+        for (CartItemComponent item : items) {
+            if (item.getProductTitle().equals(product)) {
                 return true;
             }
         }

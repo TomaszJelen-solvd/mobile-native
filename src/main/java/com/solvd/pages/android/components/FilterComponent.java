@@ -7,12 +7,13 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-public class FilterComponent extends AbstractUIObject{
+public class FilterComponent extends AbstractUIObject {
     @FindBy(xpath = "//android.widget.TextView[@text='Price (low to high)']")
     private ExtendedWebElement sortAscendingOption;
 
     @FindBy(xpath = "//android.widget.TextView[@text='Price (high to low)']")
     private ExtendedWebElement sortDescendingOption;
+
     public FilterComponent(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }

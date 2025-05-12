@@ -2,7 +2,7 @@ package com.solvd.pages.common;
 
 import org.openqa.selenium.WebDriver;
 
-public abstract class LoginPageBase extends PageBase{
+public abstract class LoginPageBase extends PageBase {
     public LoginPageBase(WebDriver driver) {
         super(driver);
     }
@@ -19,7 +19,7 @@ public abstract class LoginPageBase extends PageBase{
         return clickLogin();
     }
 
-    public abstract boolean isLoginPresent();
+    public abstract boolean sLoginButtonPresent();
 
     public abstract boolean isErrorMessagePresent();
 

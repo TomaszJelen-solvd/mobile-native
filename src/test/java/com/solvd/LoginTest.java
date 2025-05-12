@@ -2,56 +2,48 @@ package com.solvd;
 
 import com.solvd.pages.common.LoginPageBase;
 import com.solvd.pages.common.ProductListPageBase;
+import com.solvd.service.LoginCredentials;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.lang.reflect.Method;
+import static com.solvd.service.LoginCredentials.*;
 
 public class LoginTest extends BaseTest {
-    //TC001
-    @Test (dataProvider = "data-provider")
-    public void testLoginUser(String name, String password) {
+    //TC002, TC010 and TC001
+    @Test (dataProvider = "loginData")
+    public void testLoginDifferentUsers(LoginCredentials credentials) {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductListPageBase productPage = loginPage.login(name, password);
-        Assert.assertTrue(productPage.isTitlePresent(), "Failed to display product page title");
-    }
-
-    //TC002
-    @Test (dataProvider = "data-provider")
-    public void testInvalidLogin(String name, String password) {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductListPageBase productPage = loginPage.login(name, password);
-        Assert.assertTrue(loginPage.isErrorMessagePresent(), "Failed to display error");
-        Assert.assertEquals(loginPage.getErrorText(), "Username and password do not match any user in this service.", "Wrong error message");
-    }
-
-    //TC010
-    @Test (dataProvider = "data-provider")
-    public void testLockedOutLogin(String name, String password) {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductListPageBase productPage = loginPage.login(name, password);
-        Assert.assertTrue(loginPage.isErrorMessagePresent(), "Failed to display error");
-        Assert.assertEquals(loginPage.getErrorText(), "Sorry, this user has been locked out.", "Wrong error message");
+        ProductListPageBase productPage = loginPage.login(credentials.getName(), credentials.getPassword());
+        switch (credentials) {
+            case USER_INVALID_CREDENTIALS:
+                Assert.assertTrue(loginPage.isErrorMessagePresent(), "Failed to display error");
+                Assert.assertEquals(loginPage.getErrorText(), "Username and password do not match any user in this service.", "Wrong error message");
+                break;
+            case USER_LOCKED_OUT_CREDENTIALS:
+                Assert.assertTrue(loginPage.isErrorMessagePresent(), "Failed to display error");
+                Assert.assertEquals(loginPage.getErrorText(), "Sorry, this user has been locked out.", "Wrong error message");
+                break;
+            default:
+                Assert.assertTrue(productPage.isTitlePresent(), "Failed to display product page title");
+        }
     }
 
     //TC007
-    @Test (dataProvider = "data-provider")
-    public void testLogoutUser(String name, String password) {
+    @Test
+    public void testLogoutUser() {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductListPageBase productPage = loginPage.login(name, password);
+        ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
         loginPage = productPage.logout();
-        Assert.assertTrue(loginPage.isLoginPresent(), "Failed to display login page");
+        Assert.assertTrue(loginPage.sLoginButtonPresent(), "Failed to display login page");
     }
 
-    @DataProvider (name = "data-provider")
-    public Object[][] dpMethod (Method m){
-        switch (m.getName()) {
-            case "testInvalidLogin":
-                return new Object[][] {{"aaa", "aaa"}};
-            case "testLockedOutLogin":
-                return new Object[][] {{"locked_out_user","secret_sauce"}};
-        }
-        return new Object[][] {{"standard_user", "secret_sauce"}};
+    @DataProvider(name = "loginData")
+    public Object[][] loginData() {
+        return new Object[][]{
+                {STANDARD_USER},
+                {USER_INVALID_CREDENTIALS},
+                {USER_LOCKED_OUT_CREDENTIALS}
+        };
     }
 }
