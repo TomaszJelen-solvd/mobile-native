@@ -19,7 +19,7 @@ public abstract class LoginPageBase extends PageBase {
         return clickLogin();
     }
 
-    public abstract boolean sLoginButtonPresent();
+    public abstract boolean isLoginButtonPresent();
 
     public abstract boolean isErrorMessagePresent();
 

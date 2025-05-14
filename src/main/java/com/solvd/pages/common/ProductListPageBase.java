@@ -17,7 +17,7 @@ public abstract class ProductListPageBase extends PageBase {
 
     public abstract void sortPrices(SortType sortType);
 
-    public abstract DrawingPageBase clickdrawingOption();
+    public abstract DrawingPageBase clickDrawingOption();
 
     public abstract LoginPageBase logout();
 
@@ -29,7 +29,7 @@ public abstract class ProductListPageBase extends PageBase {
         }
     }
 
-    public abstract void removeProduct(String name);
+    public abstract void removeProductFromCart(String name);
 
     public abstract CartPageBase openCart();
 

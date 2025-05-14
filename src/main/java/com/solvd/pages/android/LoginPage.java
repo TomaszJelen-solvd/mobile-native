@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = LoginPageBase.class)
 public class LoginPage extends LoginPageBase {
+
     @AndroidFindBy(accessibility = "test-Username")
     private ExtendedWebElement username;
 
@@ -43,7 +44,7 @@ public class LoginPage extends LoginPageBase {
     }
 
     @Override
-    public boolean sLoginButtonPresent() {
+    public boolean isLoginButtonPresent() {
         return login.isElementPresent();
     }
 

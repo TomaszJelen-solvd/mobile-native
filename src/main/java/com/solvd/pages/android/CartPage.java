@@ -12,7 +12,9 @@ import static com.solvd.pages.WaitUtil.waitUntilListIsPresent;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CartPageBase.class)
 public class CartPage extends CartPageBase {
+
     public static final int WAIT_TIMEOUT_SEC = 3;
+
     @AndroidFindBy(accessibility = "test-Item")
     private List<CartItemComponent> items;
 
@@ -33,11 +35,7 @@ public class CartPage extends CartPageBase {
 
     @Override
     public boolean isEmpty() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        pause(2);
         return items.isEmpty();
     }
 }

@@ -21,7 +21,9 @@ import static com.solvd.pages.WaitUtil.waitUntilListIsPresent;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductListPageBase.class)
 public class ProductListPage extends ProductListPageBase {
+
     public static final int WAIT_TIMEOUT_SEC = 2;
+
     @FindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
     private ExtendedWebElement title;
 
@@ -90,7 +92,7 @@ public class ProductListPage extends ProductListPageBase {
     }
 
     @Override
-    public DrawingPageBase clickdrawingOption() {
+    public DrawingPageBase clickDrawingOption() {
         menuButton.click();
         return menuOptions.clickDrawingOption();
     }
@@ -112,7 +114,7 @@ public class ProductListPage extends ProductListPageBase {
     }
 
     @Override
-    public void removeProduct(String name) {
+    public void removeProductFromCart(String name) {
         waitUntilListIsPresent(getDriver(), items, WAIT_TIMEOUT_SEC);
         for (ProductListItemComponent item : items) {
             if (item.getProductTitle().equals(name)) {

@@ -12,8 +12,8 @@ public class DrawingTest extends BaseTest {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
-        DrawingPageBase drawingPage = productPage.clickdrawingOption();
+        DrawingPageBase drawingPage = productPage.clickDrawingOption();
         drawingPage.drawLine();
-        Assert.assertTrue(drawingPage.isLinePresent(), "Failed to find drawn line");
+        Assert.assertTrue(drawingPage.isHorizontalLinePresent(), "Failed to find drawn line");
     }
 }

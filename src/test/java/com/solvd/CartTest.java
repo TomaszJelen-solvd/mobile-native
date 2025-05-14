@@ -43,7 +43,7 @@ public class CartTest extends BaseTest {
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
         productPage.addProductToCart(SAUCE_LABS_BACKPACK.getName());
-        productPage.removeProduct(SAUCE_LABS_BACKPACK.getName());
+        productPage.removeProductFromCart(SAUCE_LABS_BACKPACK.getName());
         CartPageBase cartPage = productPage.openCart();
         Assert.assertTrue(cartPage.isEmpty(), "Failed to remove added product from cart");
     }

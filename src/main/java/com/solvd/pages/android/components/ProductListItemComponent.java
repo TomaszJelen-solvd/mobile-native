@@ -1,14 +1,11 @@
 package com.solvd.pages.android.components;
 
-import com.zebrunner.carina.utils.android.AndroidService;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 
-public class ProductListItemComponent extends AbstractUIObject implements IMobileUtils {
+public class ProductListItemComponent extends AbstractComponent {
     @AndroidFindBy(accessibility = "test-Item title")
     private ExtendedWebElement title;
 

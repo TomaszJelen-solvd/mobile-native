@@ -15,17 +15,11 @@ public class LoginTest extends BaseTest {
     public void testLoginDifferentUsers(LoginCredentials credentials) {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductListPageBase productPage = loginPage.login(credentials.getName(), credentials.getPassword());
-        switch (credentials) {
-            case USER_INVALID_CREDENTIALS:
-                Assert.assertTrue(loginPage.isErrorMessagePresent(), "Failed to display error");
-                Assert.assertEquals(loginPage.getErrorText(), "Username and password do not match any user in this service.", "Wrong error message");
-                break;
-            case USER_LOCKED_OUT_CREDENTIALS:
-                Assert.assertTrue(loginPage.isErrorMessagePresent(), "Failed to display error");
-                Assert.assertEquals(loginPage.getErrorText(), "Sorry, this user has been locked out.", "Wrong error message");
-                break;
-            default:
-                Assert.assertTrue(productPage.isTitlePresent(), "Failed to display product page title");
+        if ( credentials.getErrorText() == null) {
+            Assert.assertTrue(productPage.isTitlePresent(), "Failed to display product page title");
+        } else {
+            Assert.assertTrue(loginPage.isErrorMessagePresent(), "Failed to display error");
+            Assert.assertEquals(loginPage.getErrorText(), credentials.getErrorText(), "Wrong error message");
         }
     }
 
@@ -35,7 +29,7 @@ public class LoginTest extends BaseTest {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
         loginPage = productPage.logout();
-        Assert.assertTrue(loginPage.sLoginButtonPresent(), "Failed to display login page");
+        Assert.assertTrue(loginPage.isLoginButtonPresent(), "Failed to display login page");
     }
 
     @DataProvider(name = "loginData")

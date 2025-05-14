@@ -9,5 +9,5 @@ public abstract class DrawingPageBase extends PageBase {
 
     public abstract void drawLine();
 
-    public abstract boolean isLinePresent();
+    public abstract boolean isHorizontalLinePresent();
 }
