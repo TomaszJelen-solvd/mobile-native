@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 public class CartItemComponent extends AbstractComponent {
+
     @FindBy(xpath = ".//android.view.ViewGroup[@content-desc='test-Description']/android.widget.TextView[1]")
     private ExtendedWebElement title;
 

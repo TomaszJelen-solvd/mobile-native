@@ -12,6 +12,7 @@ import static com.solvd.service.ProductService.SAUCE_LABS_BACKPACK;
 import static com.solvd.service.ProductService.SAUCE_LABS_BIKE_LIGHT;
 
 public class CartTest extends BaseTest {
+
     //TC005
     @Test
     public void testAddProductInCart() {
@@ -45,6 +46,6 @@ public class CartTest extends BaseTest {
         productPage.addProductToCart(SAUCE_LABS_BACKPACK.getName());
         productPage.removeProductFromCart(SAUCE_LABS_BACKPACK.getName());
         CartPageBase cartPage = productPage.openCart();
-        Assert.assertTrue(cartPage.isEmpty(), "Failed to remove added product from cart");
+        Assert.assertTrue(cartPage.isItemListEmpty(), "Failed to remove added product from cart");
     }
 }

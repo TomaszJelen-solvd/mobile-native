@@ -9,5 +9,5 @@ public abstract class CartPageBase extends PageBase {
 
     public abstract boolean isProductVisibleInCart(String product);
 
-    public abstract boolean isEmpty();
+    public abstract boolean isItemListEmpty();
 }

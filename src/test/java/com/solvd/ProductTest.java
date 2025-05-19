@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ProductTest extends BaseTest {
+
     //TC003
     @Test
     public void testProductSortInAscendingOrder() {
@@ -14,7 +15,7 @@ public class ProductTest extends BaseTest {
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
         productPage.sortPrices(SortType.PRICE_LOW_TO_HIGH);
-        Assert.assertTrue(productPage.verifyProductSortingByPrice(SortType.PRICE_LOW_TO_HIGH), "Visible prices aren't sorted properly");
+        Assert.assertTrue(productPage.isProductListSortedByPrice(SortType.PRICE_LOW_TO_HIGH), "Visible prices aren't sorted properly");
     }
 
     //TC004
@@ -24,7 +25,7 @@ public class ProductTest extends BaseTest {
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
         productPage.sortPrices(SortType.PRICE_HIGH_TO_LOW);
-        Assert.assertTrue(productPage.verifyProductSortingByPrice(SortType.PRICE_HIGH_TO_LOW), "Visible prices aren't sorted properly");
+        Assert.assertTrue(productPage.isProductListSortedByPrice(SortType.PRICE_HIGH_TO_LOW), "Visible prices aren't sorted properly");
     }
 
     //TC006
@@ -33,9 +34,9 @@ public class ProductTest extends BaseTest {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductListPageBase productPage = loginPage.login("standard_user", "secret_sauce");
 
-        productPage.toggleView();
+        productPage.clickToggleViewButton();
         Assert.assertTrue(productPage.isProductDescriptionPresent(), "Failed to display products descriptions");
-        productPage.toggleView();
+        productPage.clickToggleViewButton();
         Assert.assertFalse(productPage.isProductDescriptionPresent(), "Failed to hide products descriptions");
     }
 }

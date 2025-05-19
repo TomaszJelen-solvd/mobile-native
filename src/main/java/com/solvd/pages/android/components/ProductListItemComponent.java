@@ -35,7 +35,7 @@ public class ProductListItemComponent extends AbstractComponent {
         return price.getText();
     }
 
-    public boolean isDescriptionPresent() {
+    public boolean isProductDescription() {
         return description.isElementPresent();
     }
 

@@ -58,30 +58,30 @@ public class ProductListPage extends ProductListPageBase {
     }
 
     @Override
-    public boolean verifyProductSortingByPrice(SortType sortType) {
+    public boolean isProductListSortedByPrice(SortType sortType) {
         waitUntilListIsPresent(getDriver(), items, WAIT_TIMEOUT_SEC);
-        BigDecimal reference = null;
+        BigDecimal previousPrice = null;
         BigDecimal price;
         for (ProductListItemComponent item : items) {
             price = new BigDecimal(item.getPrice().substring(1));
-            if (reference != null) {
+            if (previousPrice != null) {
                 if (sortType.isAscending()) {
-                    if (reference.compareTo(price) > 0) {
+                    if (previousPrice.compareTo(price) > 0) {
                         return false;
                     }
                 } else {
-                    if (reference.compareTo(price) < 0) {
+                    if (previousPrice.compareTo(price) < 0) {
                         return false;
                     }
                 }
             }
-            reference = price;
+            previousPrice = price;
         }
         return true;
     }
 
     @Override
-    public void toggleView() {
+    public void clickToggleViewButton() {
         toggleButton.click();
     }
 
@@ -92,7 +92,7 @@ public class ProductListPage extends ProductListPageBase {
     }
 
     @Override
-    public DrawingPageBase clickDrawingOption() {
+    public DrawingPageBase openDrawingPage() {
         menuButton.click();
         return menuOptions.clickDrawingOption();
     }
@@ -109,6 +109,7 @@ public class ProductListPage extends ProductListPageBase {
         for (ProductListItemComponent item : items) {
             if (item.getProductTitle().equals(name)) {
                 item.addProduct();
+                break;
             }
         }
     }
@@ -132,6 +133,6 @@ public class ProductListPage extends ProductListPageBase {
     @Override
     public boolean isProductDescriptionPresent() {
         waitUntilListIsPresent(getDriver(), items, WAIT_TIMEOUT_SEC);
-        return items.get(0).isDescriptionPresent();
+        return items.get(0).isProductDescription();
     }
 }

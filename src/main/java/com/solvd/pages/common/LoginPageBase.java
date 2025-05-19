@@ -3,6 +3,7 @@ package com.solvd.pages.common;
 import org.openqa.selenium.WebDriver;
 
 public abstract class LoginPageBase extends PageBase {
+
     public LoginPageBase(WebDriver driver) {
         super(driver);
     }

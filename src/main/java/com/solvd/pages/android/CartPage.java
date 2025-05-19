@@ -34,7 +34,7 @@ public class CartPage extends CartPageBase {
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isItemListEmpty() {
         pause(2);
         return items.isEmpty();
     }

@@ -10,12 +10,13 @@ import org.testng.annotations.Test;
 import static com.solvd.service.LoginCredentials.*;
 
 public class LoginTest extends BaseTest {
+
     //TC002, TC010 and TC001
-    @Test (dataProvider = "loginData")
+    @Test(dataProvider = "loginData")
     public void testLoginDifferentUsers(LoginCredentials credentials) {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductListPageBase productPage = loginPage.login(credentials.getName(), credentials.getPassword());
-        if ( credentials.getErrorText() == null) {
+        if (credentials.getErrorText() == null) {
             Assert.assertTrue(productPage.isTitlePresent(), "Failed to display product page title");
         } else {
             Assert.assertTrue(loginPage.isErrorMessagePresent(), "Failed to display error");
